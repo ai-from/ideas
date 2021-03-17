@@ -74,38 +74,44 @@ const vm = new Vue({
             }
         ]
     }),
+    methods: {
+      setColumns(width) {
+          if (width > 1630) {
+              this.columnCount = 4
+              this.itemsInColumns = [
+                  {from: 0, to: 2},
+                  {from: 3, to: 5},
+                  {from: 6, to: 7},
+                  {from: 8, to: 8}
+              ]
+          }
+          if (width < 1630) {
+              this.columnCount = 3
+              this.itemsInColumns = [
+                  {from: 0, to: 2},
+                  {from: 3, to: 5},
+                  {from: 6, to: 8}
+              ]
+          }
+          if (width < 1130) {
+              this.columnCount = 2
+              this.itemsInColumns = [
+                  {from: 0, to: 4},
+                  {from: 5, to: 8}
+              ]
+          }
+          if (width < 850) {
+              this.columnCount = 1
+              this.itemsInColumns = [
+                  {from: 0, to: 8}
+              ]
+          }
+      }
+    },
     mounted() {
+        this.setColumns(screen.width)
         window.addEventListener('resize', e => {
-            if (e.target.outerWidth > 1630) {
-                this.columnCount = 4
-                this.itemsInColumns = [
-                    {from: 0, to: 2},
-                    {from: 3, to: 5},
-                    {from: 6, to: 7},
-                    {from: 8, to: 8}
-                ]
-            }
-            if (e.target.outerWidth < 1630) {
-                this.columnCount = 3
-                this.itemsInColumns = [
-                    {from: 0, to: 2},
-                    {from: 3, to: 5},
-                    {from: 6, to: 8}
-                ]
-            }
-            if (e.target.outerWidth < 1130) {
-                this.columnCount = 2
-                this.itemsInColumns = [
-                    {from: 0, to: 4},
-                    {from: 5, to: 8}
-                ]
-            }
-            if (e.target.outerWidth < 850) {
-                this.columnCount = 1
-                this.itemsInColumns = [
-                    {from: 0, to: 8}
-                ]
-            }
+            this.setColumns(e.target.outerWidth)
         })
     }
 })
